@@ -1,16 +1,45 @@
 # This file has a list of packages to skip from comps that we don't want, plus
 # a few whitelisted things.
 
+# Selected environments
+environments:
+  - workstation-product-environment
+
 # For some reason today these are just in livecd-tools...
 whitelist:
   - kernel
   - kernel-modules
   - kernel-modules-extra
 
-# Entirely skip all packages in libreoffice
-blacklist_groups:
-  - libreoffice
+# Additional groups not available in the environments
+additional_groups:
+  - standard
+  - dial-up
+  - system-tools
 
+# Entirely skip all packages in these groups
+blacklist_groups:
+  - basic-desktop
+  - libreoffice
+  - cinnamon-desktop
+  - gnome-desktop
+  - kde-desktop
+  - lxde-desktop
+  - lxqt-desktop
+  - mate-desktop
+  - sugar-desktop
+  - xfce-desktop
+  - legacy-fonts
+  - xmonad
+  - xmonad-mate
+  - firefox
+
+# Additional packages not in a particular group
+packages:
+  - libsane-hpaio
+  - sane-backends-drivers-scanners
+
+# Packages to be dropped from groups
 blacklist:
   core:
     # We use rpm-ostree for the host
@@ -79,6 +108,23 @@ blacklist:
     # filesystem tools, agian priv container
     - dosfstools
     - ntfs-3g
+    # No Gtk+ or GNOME stuff
+    - adwaita-qt4
+    - adwaita-qt5
+    - ibus-gtk2
+    - ibus-gtk3
+    - fros-gnome
+    - desktop-backgrounds-gnome
+    - gnome-shell-extension-background-logo
+    - pinentry-gnome3
+    - qgnomeplatform
+    # No Fedora specific stuff
+    - fedora-user-agent-chrome
+    - fedora-release-workstation
+    # No old Qt
+    - qt
+    - qt-settings
+    - qt-x11
   networkmanager-submodules:
     # Let's use the builtin one by default
     - dhcp-client
@@ -87,3 +133,32 @@ blacklist:
     - cups-pk-helper
     # For now...
     - ghostscript
+  standard:
+    # We removed cronie a while ago, should nuke these too
+    - crontabs
+    - at
+    # We use rpm-ostree for the host
+    - deltarpm
+    # ed is useless for our users
+    - ed
+    # Remove Fedora specific stuff
+    - fedora-release-notes
+    # We only want systemd journal
+    - rsyslog
+    # These are optional and can be installed as OS extensions
+    - mailcap
+    - nmap-ncat
+  dial-up:
+    # These ones are rarely used these days
+    - isdn4k-utils
+    - minicom
+  system-tools:
+    - BackupPC
+    - bonnie++
+    - jigdo
+    - screen
+    - setserial
+    - tigervnc
+    - xdelta
+    - zisofs-tools
+    - zsh

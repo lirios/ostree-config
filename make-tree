@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+if [ ! -e build-repo ]; then
+    mkdir build-repo
+    ostree init --repo=build-repo --mode=bare-user
+fi
+
+if [ ! -e repo ]; then
+    mkdir repo
+    ostree init --repo=repo --mode=archive
+fi
+
+if [ ! -e cache ]; then
+    mkdir cache
+fi
+
+echo "Compose tree..."
+rpm-ostree compose tree --repo=build-repo --cachedir=cache lirios-unstable-desktop.json
+
+echo "Archive tree..."
+ostree --repo=repo pull-local build-repo lirios/unstable/x86_64/desktop

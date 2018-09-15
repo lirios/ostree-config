@@ -1,0 +1,12 @@
+{
+    "ref": "lirios/unstable/x86_64/desktop",
+    "repos": ["plfiorini-liri-unstable-fedora-28"],
+
+    "include": "lirios-desktop-pkgs.json",
+
+    "packages": [
+        "plymouth-theme-lirios",
+        "sddm",
+        "sddm-theme-lirios"
+    ]
+}

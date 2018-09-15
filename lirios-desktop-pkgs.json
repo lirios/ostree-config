@@ -1,0 +1,25 @@
+{
+    "include": "lirios-base.json",
+    "packages": [
+        "liri-materialdecoration",
+        "liri-platformtheme",
+        "liri-networkmanager",
+        "liri-pulseaudio",
+        "liri-power-manager",
+        "liri-screencast",
+        "liri-screenshot",
+        "liri-settings",
+        "liri-shell",
+        "liri-wallpapers",
+        "qml-xwayland",
+        "xdg-desktop-portal-liri",
+        "paper-icon-theme",
+        "liri-color-schemes",
+        "liri-appcenter",
+        "liri-calculator",
+        "liri-files",
+        "liri-terminal",
+        "liri-browser",
+        "liri-text"
+    ]
+}

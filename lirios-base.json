@@ -1,6 +1,13 @@
 {
-    "ref": "fedora/rawhide/x86_64/workstation-base",
-    "include": "fedora-workstation-base-pkgs.json",
+    "ref": "lirios/unstable/x86_64/base",
+
+    "repos": ["fedora-28", "fedora-28-updates", "plfiorini-lirios-fedora-28"],
+    "releasever": "28",
+
+    "include": "lirios-base-pkgs.json",
+
+    "automatic_version_prefix": "0.10.0",
+    "mutate-os-release": "0.10.0",
 
     "selinux": true,
     "documentation": true,
@@ -17,11 +24,18 @@
 
     "default_target": "graphical.target",
 
-    "comment-for-packages": "Keep this in sync with fedora-atomic-host.json from fedora-atomic",
+    "packages": [
+        "lirios-customization",
+        "lirios-release",
+        "flatpak",
+        "rpm-ostree",
+        "docker"
+    ],
+
     "packages-aarch64": ["grub2-efi", "ostree-grub2", "efibootmgr", "shim"],
     "packages-armhfp": ["extlinux-bootloader"],
     "packages-ppc64": ["grub2", "ostree-grub2"],
     "packages-ppc64le": ["grub2", "ostree-grub2"],
     "packages-x86_64": ["grub2", "grub2-efi-x64", "ostree-grub2",
-                         "efibootmgr", "shim", "microcode_ctl"]
+                        "efibootmgr", "shim", "microcode_ctl"]
 }
