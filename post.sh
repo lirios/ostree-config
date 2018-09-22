@@ -5,6 +5,9 @@
 
 set -xeuo pipefail
 
+# Remove root password
+passwd -d root
+
 # Work around https://bugzilla.redhat.com/show_bug.cgi?id=1265295
 # Also note the create-new-then-rename dance for rofiles-fuse compat
 if ! grep -q '^Storage=persistent' /etc/systemd/journald.conf; then
