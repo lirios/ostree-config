@@ -2,6 +2,8 @@
 
 set -e
 
+ref=lirios/unstable/x86_64/desktop
+
 if [ ! -e build-repo ]; then
     mkdir build-repo
     ostree init --repo=build-repo --mode=bare-user
@@ -20,4 +22,5 @@ echo "Compose tree..."
 rpm-ostree compose tree --force-nocache --repo=build-repo --cachedir=cache lirios-unstable-desktop.json
 
 echo "Archive tree..."
-ostree --repo=repo pull-local build-repo lirios/unstable/x86_64/desktop
+ostree --repo=repo pull-local build-repo $ref
+ostree --repo=repo static-delta generate $ref
