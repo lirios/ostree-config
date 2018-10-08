@@ -24,3 +24,4 @@ rpm-ostree compose tree --force-nocache --repo=build-repo --cachedir=cache lirio
 echo "Archive tree..."
 ostree --repo=repo pull-local build-repo $ref
 ostree --repo=repo static-delta generate $ref
+ostree --repo=repo summary -u
