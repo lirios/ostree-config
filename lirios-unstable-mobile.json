@@ -1,0 +1,10 @@
+{
+    "ref": "lirios/unstable/x86_64/mobile",
+    "repos": ["plfiorini-liri-unstable-fedora-28"],
+
+    "include": "lirios-mobile-pkgs.json",
+
+    "packages": [
+        "plymouth-theme-lirios"
+    ]
+}

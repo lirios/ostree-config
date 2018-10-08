@@ -1,0 +1,6 @@
+{
+    "include": "lirios-desktop-pkgs.json",
+    "packages": [
+        "qt5-qtvirtualkeyboard"
+    ]
+}
