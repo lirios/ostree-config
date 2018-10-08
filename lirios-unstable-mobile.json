@@ -5,6 +5,7 @@
     "include": "lirios-mobile-pkgs.json",
 
     "packages": [
+        "liri-unstable-repos",
         "plymouth-theme-lirios"
     ]
 }
