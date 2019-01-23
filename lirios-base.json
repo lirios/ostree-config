@@ -1,8 +1,8 @@
 {
     "ref": "lirios/unstable/x86_64/base",
 
-    "repos": ["fedora-28", "fedora-28-updates", "plfiorini-lirios-fedora-28"],
-    "releasever": "28",
+    "repos": ["fedora-29", "fedora-29-updates", "plfiorini-lirios-fedora-29"],
+    "releasever": "29",
 
     "include": "lirios-base-pkgs.json",
 

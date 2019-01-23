@@ -1,6 +1,6 @@
-[plfiorini-liri-nightly-fedora-28]
+[plfiorini-liri-nightly-fedora-29]
 name=Copr repo for liri-nightly owned by plfiorini
-baseurl=https://copr-be.cloud.fedoraproject.org/results/plfiorini/liri-nightly/fedora-28-$basearch/
+baseurl=https://copr-be.cloud.fedoraproject.org/results/plfiorini/liri-nightly/fedora-29-$basearch/
 type=rpm-md
 skip_if_unavailable=True
 gpgcheck=1

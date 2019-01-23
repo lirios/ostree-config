@@ -1,6 +1,6 @@
 {
     "ref": "lirios/unstable/x86_64/desktop",
-    "repos": ["plfiorini-liri-nightly-fedora-28"],
+    "repos": ["plfiorini-liri-nightly-fedora-29"],
 
     "include": "lirios-desktop-pkgs.json",
 

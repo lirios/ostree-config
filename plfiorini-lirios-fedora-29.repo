@@ -1,6 +1,6 @@
-[plfiorini-lirios-fedora-28]
+[plfiorini-lirios-fedora-29]
 name=Copr repo for lirios owned by plfiorini
-baseurl=https://copr-be.cloud.fedoraproject.org/results/plfiorini/lirios/fedora-28-$basearch/
+baseurl=https://copr-be.cloud.fedoraproject.org/results/plfiorini/lirios/fedora-29-$basearch/
 type=rpm-md
 skip_if_unavailable=True
 gpgcheck=1
