@@ -1,7 +1,6 @@
 {
     "include": "lirios-base.json",
     "packages": [
-        "liri-materialdecoration",
         "liri-platformtheme",
         "liri-networkmanager",
         "liri-pulseaudio",
