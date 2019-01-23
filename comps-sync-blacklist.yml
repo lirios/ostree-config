@@ -57,6 +57,8 @@ blacklist:
     # Needs to be arch specific
     - ppc64-utils
     - powerpc-utils
+    # No longer exist
+    - lsvpd
   base-x:
     # These are for arm...need to handle arch-specific bits
     - xorg-x11-drv-armsoc
