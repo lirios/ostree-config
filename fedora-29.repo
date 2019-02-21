@@ -1,6 +1,0 @@
-[fedora-29]
-name=Fedora 29 $basearch
-mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-29&arch=$basearch
-enabled=0
-gpgcheck=0
-metadata_expire=1d
