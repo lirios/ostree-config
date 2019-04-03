@@ -25,14 +25,13 @@
     "default_target": "graphical.target",
 
     "packages": [
-        "buildah",
+        "fedora-toolbox",
         "flatpak",
         "flatpak-builder",
         "git-core",
         "lirios-customization",
         "lirios-release",
         "lvm2",
-        "podman",
         "rpm-ostree",
         "skopeo",
         "docker"
