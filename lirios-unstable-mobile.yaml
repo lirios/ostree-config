@@ -1,0 +1,9 @@
+ref: lirios/unstable/${basearch}/mobile
+repos:
+  - plfiorini-liri-nightly
+
+include: lirios-mobile-pkgs.yaml
+
+packages:
+  - liri-nightly-repos
+  - plymouth-theme-lirios

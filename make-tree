@@ -19,7 +19,7 @@ if [ ! -e cache ]; then
 fi
 
 echo "Compose tree..."
-rpm-ostree compose tree --force-nocache --repo=build-repo --cachedir=cache lirios-unstable-desktop.json
+rpm-ostree compose tree --force-nocache --repo=build-repo --cachedir=cache lirios-unstable-desktop.yaml
 
 echo "Archive tree..."
 ostree --repo=repo pull-local build-repo $ref

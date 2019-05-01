@@ -1,0 +1,3 @@
+include: lirios-desktop-pkgs.yaml
+packages:
+  - qt5-qtvirtualkeyboard
