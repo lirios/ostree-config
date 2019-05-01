@@ -4,7 +4,7 @@ repos:
   - fedora
   - fedora-updates
   - plfiorini-lirios
-releasever: 29
+releasever: 30
 
 include: lirios-base-pkgs.yaml
 
@@ -30,16 +30,29 @@ check-groups: { type: file, filename: group }
 default_target: graphical.target
 
 packages:
-  - fedora-toolbox
-  - flatpak
-  - flatpak-builder
   - git-core
-  - lirios-customization
-  - lirios-release
   - lvm2
   - rpm-ostree
+  # Container management
+  - buildah
+  - podman
   - skopeo
-  - docker
+  - toolbox
+  # Flatpak support
+  - flatpak
+  - flatpak-builder
+  # HFS filesystem tools for Apple hardware
+  # See https://github.com/projectatomic/rpm-ostree/issues/1380
+  - hfsplus-tools
+  # Bundle the minimal -devel packages needed to build a kernel.
+  # This is needed because we can't rely on layering to install these
+  # due to version conflicts with the base image.
+  - glibc-devel
+  - kernel-devel
+  - elfutils-libelf-devel
+  # Liri OS
+  - lirios-customization
+  - lirios-release
 
 packages-aarch64:
   - grub2-efi

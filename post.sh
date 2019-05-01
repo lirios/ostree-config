@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
-# This file is very similar to treecompose-post.sh
-# from fedora-atomic: https://pagure.io/fedora-atomic
-# Make changes there first where applicable.
 
 set -xeuo pipefail
 
 # Remove root password
 passwd -d root
+
+# https://github.com/projectatomic/rpm-ostree/issues/1542#issuecomment-419684977
+for x in /etc/yum.repos.d/*modular.repo; do
+    sed -i -e 's,enabled=[01],enabled=0,' ${x}
+done
 
 # Work around https://bugzilla.redhat.com/show_bug.cgi?id=1265295
 # Also note the create-new-then-rename dance for rofiles-fuse compat
