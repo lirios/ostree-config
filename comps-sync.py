@@ -30,7 +30,7 @@ base_pkgs_path = 'lirios-base-pkgs.yaml'
 with open(base_pkgs_path) as f:
     manifest = yaml.safe_load(f)
 
-with open('comps-sync-blacklist.yml') as f:
+with open('comps-sync-blacklist.yaml') as f:
     doc = yaml.safe_load(f)
     comps_environments = doc.get('environments', [])
     comps_blacklist = doc.get('blacklist', {})
