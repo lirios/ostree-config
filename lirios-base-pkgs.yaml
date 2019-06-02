@@ -4,6 +4,7 @@ packages:
   - NetworkManager
   - NetworkManager-adsl
   - NetworkManager-bluetooth
+  - NetworkManager-config-connectivity-fedora
   - NetworkManager-l2tp
   - NetworkManager-libreswan
   - NetworkManager-openconnect
@@ -61,6 +62,7 @@ packages:
   - foomatic-db-ppds
   - fpaste
   - fprintd-pam
+  - gamemode
   - glibc
   - glibc-all-langpacks
   - glx-utils
@@ -72,6 +74,7 @@ packages:
   - google-noto-sans-cjk-ttc-fonts
   - google-noto-sans-sinhala-fonts
   - google-noto-serif-cjk-ttc-fonts
+  - grubby
   - gstreamer1-plugins-bad-free
   - gstreamer1-plugins-good
   - gutenprint
@@ -79,7 +82,6 @@ packages:
   - hostname
   - hplip
   - hunspell
-  - hyperv-daemons
   - ibus-hangul
   - ibus-kkc
   - ibus-libpinyin
@@ -87,7 +89,6 @@ packages:
   - ibus-m17n
   - ibus-qt
   - ibus-typing-booster
-  - initscripts
   - iproute
   - iptables
   - iptstate
@@ -157,7 +158,6 @@ packages:
   - nss-mdns
   - ntfs-3g
   - ntfsprogs
-  - open-vm-tools-desktop
   - openconnect
   - openldap-clients
   - opensc
@@ -174,13 +174,12 @@ packages:
   - pinfo
   - plymouth
   - plymouth-system-theme
-  - podman
   - policycoreutils
   - policycoreutils-python-utils
-  - polkit
   - ppp
   - procps-ng
   - psacct
+  - psmisc
   - pulseaudio
   - pulseaudio-module-x11
   - pulseaudio-utils
@@ -190,7 +189,6 @@ packages:
   - qt5-qtdeclarative
   - qt5-qtxmlpatterns
   - quota
-  - rdist
   - realmd
   - rng-tools
   - rootfiles
@@ -234,7 +232,6 @@ packages:
   - util-linux-user
   - vconfig
   - vim-minimal
-  - virtualbox-guest-additions
   - vpnc
   - wget
   - which
@@ -244,13 +241,9 @@ packages:
   - xorg-x11-drv-ati
   - xorg-x11-drv-evdev
   - xorg-x11-drv-fbdev
-  - xorg-x11-drv-intel
   - xorg-x11-drv-libinput
   - xorg-x11-drv-nouveau
-  - xorg-x11-drv-openchrome
   - xorg-x11-drv-qxl
-  - xorg-x11-drv-vesa
-  - xorg-x11-drv-vmware
   - xorg-x11-drv-wacom
   - xorg-x11-server-Xorg
   - xorg-x11-utils
