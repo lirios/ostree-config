@@ -1,0 +1,9 @@
+ref: lirios/unstable/${basearch}/embedded
+repos:
+  - plfiorini-liri-nightly
+
+include: lirios-embedded-pkgs.yaml
+
+packages:
+  - lirios-release-embedded
+  - liri-nightly-repos
