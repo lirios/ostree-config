@@ -5,7 +5,7 @@
 # which are not mentioned in comps, and add packages from
 # comps.
 
-import os, sys, subprocess, argparse, shlex, yaml
+import os, sys, subprocess, argparse, shlex, yaml, re
 import libcomps
 
 def fatal(msg):
@@ -38,6 +38,13 @@ with open('comps-sync-blacklist.yaml') as f:
     comps_blacklist_groups = doc.get('blacklist_groups', [])
     comps_additional_groups = doc.get('additional_groups', [])
     comps_packages = doc.get('packages', [])
+    comps_blacklist_all = [re.compile(x) for x in doc['blacklist_all_regexp']]
+
+def is_blacklisted(pkgname):
+    for br in comps_blacklist_all:
+        if br.match(pkgname):
+            return True
+    return False
 
 manifest_packages = set(manifest['packages'])
 
@@ -130,14 +137,16 @@ else:
 ws_added = {}
 for (pkg, data) in ws_pkgs.items():
     if pkg not in manifest_packages:
-        ws_added[pkg] = data
-        manifest_packages.add(pkg)
+        if is_blacklisted(pkg.name) is False:
+            ws_added[pkg] = data
+            manifest_packages.add(pkg)
 
 # Look for packages not in manifest
 for pkgname in ws_additional_pkgs:
     if pkgname not in manifest_packages:
-        #ws_added[pkgname] = (libcomps.PACKAGE_TYPE_DEFAULT, set())
-        manifest_packages.add(pkgname)
+        if is_blacklisted(pkgname) is False:
+            #ws_added[pkgname] = (libcomps.PACKAGE_TYPE_DEFAULT, set())
+            manifest_packages.add(pkgname)
 
 def format_pkgtype(n):
     if n == libcomps.PACKAGE_TYPE_DEFAULT:
