@@ -4,7 +4,7 @@ packages:
   - liri-networkmanager
   - liri-pulseaudio
   - liri-power-manager
-  - liri-screencast
+ # - liri-screencast
   - liri-screenshot
   - liri-settings
   - liri-session
