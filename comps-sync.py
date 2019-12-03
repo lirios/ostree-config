@@ -33,7 +33,7 @@ with open(base_pkgs_path) as f:
 with open('comps-sync-blacklist.yaml') as f:
     doc = yaml.safe_load(f)
     comps_environments = doc.get('environments', [])
-    comps_blacklist = doc.get('blacklist', {})
+    comps_blacklist = doc.get('blacklist', [])
     comps_whitelist = doc.get('whitelist', [])
     comps_blacklist_groups = doc.get('blacklist_groups', [])
     comps_additional_groups = doc.get('additional_groups', [])
@@ -41,6 +41,8 @@ with open('comps-sync-blacklist.yaml') as f:
     comps_blacklist_all = [re.compile(x) for x in doc['blacklist_all_regexp']]
 
 def is_blacklisted(pkgname):
+    if pkgname in comps_blacklist:
+        return True
     for br in comps_blacklist_all:
         if br.match(pkgname):
             return True
@@ -65,13 +67,12 @@ for ws_env_name in comps_environments:
         group = comps.groups_match(id=gid.name)[0]
         if gid.name in comps_blacklist_groups:
             continue
-        blacklist = comps_blacklist.get(gid.name, set())
         for pkg in group.packages:
             pkgname = pkg.name
             if pkg.type not in (libcomps.PACKAGE_TYPE_DEFAULT,
                                 libcomps.PACKAGE_TYPE_MANDATORY):
                 continue
-            if pkgname in blacklist:
+            if is_blacklisted(pkgname) is True:
                 continue
             pkgdata = ws_pkgs.get(pkgname)
             if pkgdata is None:
@@ -86,13 +87,12 @@ for group_name in comps_additional_groups:
     group = comps.groups_match(id=group_name)[0]
     if group_name in comps_blacklist_groups:
         continue
-    blacklist = comps_blacklist.get(group_name, set())
     for pkg in group.packages:
         pkgname = pkg.name
         if pkg.type not in (libcomps.PACKAGE_TYPE_DEFAULT,
                             libcomps.PACKAGE_TYPE_MANDATORY):
             continue
-        if pkgname in blacklist:
+        if is_blacklisted(pkgname) is True:
             continue
         pkgdata = ws_pkgs.get(pkgname)
         if pkgdata is None:
@@ -136,10 +136,10 @@ else:
 # Look for packages in workstation but not in the manifest
 ws_added = {}
 for (pkg, data) in ws_pkgs.items():
-    if pkg not in manifest_packages:
-        if is_blacklisted(pkg.name) is False:
+    if pkgname not in manifest_packages:
+        if is_blacklisted(pkgname) is False:
             ws_added[pkg] = data
-            manifest_packages.add(pkg)
+            manifest_packages.add(pkgname)
 
 # Look for packages not in manifest
 for pkgname in ws_additional_pkgs:

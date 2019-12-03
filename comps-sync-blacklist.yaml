@@ -48,150 +48,140 @@ packages:
 
 # Packages to be dropped from groups
 blacklist:
-  core:
-    # We use rpm-ostree for the host
-    - dnf
-    - dnf-yum
-    - dnf-plugins-core
-    # Not sure why this is there at all
-    - dracut-config-rescue
-    # Eh...you can install this in a priv container
-    - parted
-    # https://bugzilla.redhat.com/show_bug.cgi?id=1452348
-    - grubby
-    # Colin says we also don't need grubby-deprecated
-    - grubby-deprecated
-    # Why?
-    - ncurses
-    #  Architecture specific packages
-    - ppc64-utils
-    - powerpc-utils
-    - lsvpd
-  base-x:
-    # x86 specific packages. Added back by lirios-base.yaml
-    - xorg-x11-drv-intel
-    - xorg-x11-drv-openchrome
-    - xorg-x11-drv-vesa
-    - xorg-x11-drv-vmware
-    # ARM specific packages
-    - xorg-x11-drv-armsoc
-    - xorg-x11-drv-omap
-  guest-desktop-agents:
-    # x86 specific packages. Added back by lirios-base.yaml
-    - hyperv-daemons
-    - open-vm-tools-desktop
-    - virtualbox-guest-additions
-  gnome-desktop:
-    # Apps
-    - evince
-    - evince-djvu
-    - evince-nautilus
-    - file-roller-nautilus
-    - gnome-calendar
-    - gnome-documents
-    - gnome-photos
-  workstation-product:
-    # We use rpm-ostree for the host
-    - dnf
-    - dnf-plugins-core
-    - deltarpm
-    # Really not worth listing explicitly
-    - filesystem
-    # Why?
-    - ncurses
-    - mailcap
-    # This seems like some weird legacy thing, it also
-    # drags in usermode, which should also be deprecated
-    # and blocks a /usr/sbin + /usr/bin unification.
-    - setuptool
-    # Really?
-    - tcp_wrappers
-    # This probably doesn't need to be default
-    - ppp
-    # We removed cronie a while ago, should nuke these too
-    - crontabs
-    - at
-    # This drags in a huge dependency set of dnf bits
-    - abrt-cli
-    - abrt-desktop
-    - abrt-java-connector
-    # Requires libreoffice
-    - unoconv
-    # Will change to git-core
-    - git
-    # Apps
-    - rhythmbox
-    - evolution
-    - evolution-ews
-    - evolution-help
-    # This is ancient now, and IMO has been superceded by cgroups
-    # Also it breaks with --unified-core.
-    - psacct
-    # Random tools: container
-    - rdist
-    - jwhois
-    - tcpdump
-    - telnet
-    - traceroute
-    - net-tools
-    - nmap-ncat
-    # filesystem tools, agian priv container
-    - dosfstools
-    - ntfs-3g
-    # Misc
-    - dos2unix
-    # No Gtk+ or GNOME stuff
-    - adwaita-qt4
-    - adwaita-qt5
-    - ibus-gtk2
-    - ibus-gtk3
-    - fros-gnome
-    - desktop-backgrounds-gnome
-    - gnome-shell-extension-background-logo
-    - pinentry-gnome3
-    - qgnomeplatform
-    # No Fedora specific stuff
-    - fedora-user-agent-chrome
-    - fedora-release-workstation
-    - fedora-workstation-backgrounds
-    # No old Qt
-    - qt
-    - qt-settings
-    - qt-x11
-  networkmanager-submodules:
-    # Let's use the builtin one by default
-    - dhcp-client
-  printing:
-    # We don't use PackageKit
-    - cups-pk-helper
-    # For now...
-    - ghostscript
-  standard:
-    # We removed cronie a while ago, should nuke these too
-    - crontabs
-    - at
-    # We use rpm-ostree for the host
-    - deltarpm
-    # ed is useless for our users
-    - ed
-    # Remove Fedora specific stuff
-    - fedora-release-notes
-    # We only want systemd journal
-    - rsyslog
-    # These are optional and can be installed as OS extensions
-    - mailcap
-    - nmap-ncat
-  dial-up:
-    # These ones are rarely used these days
-    - isdn4k-utils
-    - minicom
-  system-tools:
-    - BackupPC
-    - bonnie++
-    - jigdo
-    - screen
-    - setserial
-    - tigervnc
-    - xdelta
-    - zisofs-tools
-    - zsh
+  # We use rpm-ostree for the host
+  - dnf
+  - dnf-yum
+  - dnf-plugins-core
+  # Not sure why this is there at all
+  - dracut-config-rescue
+  # Eh...you can install this in a priv container
+  - parted
+  # https://bugzilla.redhat.com/show_bug.cgi?id=1452348
+  - grubby
+  # Colin says we also don't need grubby-deprecated
+  - grubby-deprecated
+  # Why?
+  - ncurses
+  #  Architecture specific packages
+  - ppc64-utils
+  - powerpc-utils
+  - lsvpd
+  # x86 specific packages. Added back by lirios-base.yaml
+  - xorg-x11-drv-intel
+  - xorg-x11-drv-openchrome
+  - xorg-x11-drv-vesa
+  - xorg-x11-drv-vmware
+  # ARM specific packages
+  - xorg-x11-drv-armsoc
+  - xorg-x11-drv-omap
+  # x86 specific packages. Added back by lirios-base.yaml
+  - hyperv-daemons
+  - open-vm-tools-desktop
+  - virtualbox-guest-additions
+  # Apps
+  - evince
+  - evince-djvu
+  - evince-nautilus
+  - file-roller-nautilus
+  - gnome-calendar
+  - gnome-documents
+  - gnome-photos
+  # We use rpm-ostree for the host
+  - dnf
+  - dnf-plugins-core
+  - deltarpm
+  # Really not worth listing explicitly
+  - filesystem
+  # Why?
+  - ncurses
+  - mailcap
+  # This seems like some weird legacy thing, it also
+  # drags in usermode, which should also be deprecated
+  # and blocks a /usr/sbin + /usr/bin unification.
+  - setuptool
+  # Really?
+  - tcp_wrappers
+  # This probably doesn't need to be default
+  - ppp
+  # We removed cronie a while ago, should nuke these too
+  - crontabs
+  - at
+  # This drags in a huge dependency set of dnf bits
+  - abrt-cli
+  - abrt-desktop
+  - abrt-java-connector
+  # Requires libreoffice
+  - unoconv
+  # Will change to git-core
+  - git
+  # Apps
+  - rhythmbox
+  - evolution
+  - evolution-ews
+  - evolution-help
+  # This is ancient now, and IMO has been superceded by cgroups
+  # Also it breaks with --unified-core.
+  - psacct
+  # Random tools: container
+  - rdist
+  - jwhois
+  - tcpdump
+  - telnet
+  - traceroute
+  - net-tools
+  - nmap-ncat
+  # filesystem tools, agian priv container
+  - dosfstools
+  - ntfs-3g
+  # Misc
+  - dos2unix
+  # No Gtk+ or GNOME stuff
+  - adwaita-qt4
+  - adwaita-qt5
+  - ibus-gtk2
+  - ibus-gtk3
+  - fros-gnome
+  - desktop-backgrounds-gnome
+  - gnome-shell-extension-background-logo
+  - pinentry-gnome3
+  - qgnomeplatform
+  # No Fedora specific stuff
+  - fedora-user-agent-chrome
+  - fedora-release-workstation
+  - fedora-workstation-backgrounds
+  # No old Qt
+  - qt
+  - qt-settings
+  - qt-x11
+  # Let's use the builtin one by default
+  - dhcp-client
+  # We don't use PackageKit
+  - cups-pk-helper
+  # For now...
+  - ghostscript
+  # We removed cronie a while ago, should nuke these too
+  - crontabs
+  - at
+  # We use rpm-ostree for the host
+  - deltarpm
+  # ed is useless for our users
+  - ed
+  # Remove Fedora specific stuff
+  - fedora-release-notes
+  # We only want systemd journal
+  - rsyslog
+  # These are optional and can be installed as OS extensions
+  - mailcap
+  - nmap-ncat
+  # These ones are rarely used these days
+  - isdn4k-utils
+  - minicom
+  - BackupPC
+  - bonnie++
+  - jigdo
+  - screen
+  - setserial
+  - tigervnc
+  - xdelta
+  - zisofs-tools
+  - zsh
