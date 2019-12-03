@@ -13,10 +13,8 @@ packages:
   - NetworkManager-vpnc
   - NetworkManager-wifi
   - NetworkManager-wwan
-  - PackageKit-gstreamer-plugin
   - aajohan-comfortaa-fonts
   - abattis-cantarell-fonts
-  - abrt-cli
   - acl
   - alsa-plugins-pulseaudio
   - alsa-ucm
@@ -49,14 +47,10 @@ packages:
   - dejavu-sans-fonts
   - dejavu-sans-mono-fonts
   - dejavu-serif-fonts
-  - dhcp-client
   - dnsmasq
-  - dos2unix
-  - dosfstools
   - e2fsprogs
   - ethtool
   - file
-  - filesystem
   - firewalld
   - foomatic
   - foomatic-db-ppds
@@ -74,7 +68,6 @@ packages:
   - google-noto-sans-cjk-ttc-fonts
   - google-noto-sans-sinhala-fonts
   - google-noto-serif-cjk-ttc-fonts
-  - grubby
   - gstreamer1-plugins-bad-free
   - gstreamer1-plugins-good
   - gutenprint
@@ -114,7 +107,6 @@ packages:
   - iwl7260-firmware
   - jomolhari-fonts
   - julietaula-montserrat-fonts
-  - jwhois
   - kbd
   - kernel
   - kernel-modules-extra
@@ -125,7 +117,6 @@ packages:
   - liberation-serif-fonts
   - libertas-usb8388-firmware
   - libreswan
-  - libsane-hpaio
   - linux-atm
   - linux-firmware
   - logrotate
@@ -151,12 +142,10 @@ packages:
   - mpage
   - mtr
   - nano
-  - net-tools
   - nfs-utils
   - nmap
   - nss-altfiles
   - nss-mdns
-  - ntfs-3g
   - ntfsprogs
   - openconnect
   - openldap-clients
@@ -176,9 +165,7 @@ packages:
   - plymouth-system-theme
   - policycoreutils
   - policycoreutils-python-utils
-  - ppp
   - procps-ng
-  - psacct
   - psmisc
   - pulseaudio
   - pulseaudio-module-x11
@@ -196,7 +183,6 @@ packages:
   - rpm
   - rsync
   - samba-client
-  - sane-backends-drivers-scanners
   - scl-utils
   - selinux-policy-targeted
   - setup
@@ -219,11 +205,8 @@ packages:
   - systemd
   - systemd-udev
   - tar
-  - tcpdump
-  - telnet
   - thai-scalable-waree-fonts
   - time
-  - traceroute
   - tree
   - unzip
   - usb_modeswitch
@@ -251,3 +234,4 @@ packages:
   - xorg-x11-xinit
   - zd1211-firmware
   - zip
+  - zram
