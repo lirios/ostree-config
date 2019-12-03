@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-# Usage: ./comps-sync.py /path/to/comps-f29.xml.in
+# Usage: ./comps-sync.py /path/to/comps-f30.xml.in
+# Usage: ./comps-sync.py
 #
 # Can both remove packages from the manifest
 # which are not mentioned in comps, and add packages from
@@ -7,6 +8,7 @@
 
 import os, sys, subprocess, argparse, shlex, yaml, re
 import libcomps
+import requests
 
 def fatal(msg):
     print >>sys.stderr, msg
@@ -22,7 +24,7 @@ def write_manifest(fpath, pkgs):
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--save", help="Write changes", action='store_true')
-parser.add_argument("src", help="Source path")
+parser.add_argument("--file", help="Source path")
 
 args = parser.parse_args()
 
@@ -56,7 +58,11 @@ workstation_product_packages = set()
 # can find packages not listed in comps *at all*, beyond
 # just the workstation environment.
 comps = libcomps.Comps()
-comps.fromxml_f(args.src)
+if args.file:
+    comps.fromxml_f(args.file)
+else:
+    response = requests.get('https://pagure.io/fedora-comps/raw/master/f/comps-f30.xml.in')
+    comps.fromxml_str(response.text)
 
 # Parse the environments, gathering default or mandatory packages
 ws_pkgs = {}
