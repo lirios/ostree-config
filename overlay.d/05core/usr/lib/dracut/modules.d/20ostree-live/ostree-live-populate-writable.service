@@ -1,0 +1,9 @@
+[Unit]
+Description=Initialize tmpfs for user data
+DefaultDependencies=false
+RequiresMountsFor=/writable
+Before=sysroot-var.mount
+
+[Service]
+Type=oneshot
+ExecStart=/bin/mkdir -p /writable/var

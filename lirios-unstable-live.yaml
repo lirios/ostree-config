@@ -1,0 +1,25 @@
+include: lirios-unstable-desktop.yaml
+
+ref: lirios/unstable/${basearch}/live
+
+documentation: false
+
+remove-files:
+  # We don't ship man(1) or info(1)
+  - usr/share/info
+  - usr/share/man
+  # Drop text docs too
+  - usr/share/doc
+
+packages:
+  - calamares
+  - liri-calamares-branding
+  - dracut-live
+  - memtest86+
+  - syslinux
+
+initramfs-args:
+  - --no-hostonly
+  - --add=dmsquash-live
+  - --add=pollcdrom
+  - --add=ostree-live
