@@ -40,12 +40,6 @@ blacklist_groups:
 blacklist_all_regexp:
   - "PackageKit.*"
 
-# Additional packages not in a particular group
-packages:
-  - libsane-hpaio
-  - sane-backends-drivers-scanners
-  - polkit
-
 # Packages to be dropped from groups
 blacklist:
   # We use rpm-ostree for the host

@@ -37,7 +37,6 @@ with open('comps-sync-blacklist.yaml') as f:
     comps_whitelist = doc.get('whitelist', [])
     comps_blacklist_groups = doc.get('blacklist_groups', [])
     comps_additional_groups = doc.get('additional_groups', [])
-    comps_packages = doc.get('packages', [])
     comps_blacklist_all = [re.compile(x) for x in doc['blacklist_all_regexp']]
 
 def is_blacklisted(pkgname):
@@ -102,11 +101,6 @@ for group_name in comps_additional_groups:
             ws_pkgs[pkgname] = pkgdata = (pkg.type, pkgdata[1])
         pkgdata[1].add(group_name)
 
-# Additional packages
-ws_additional_pkgs = set()
-for pkgname in comps_packages:
-    ws_additional_pkgs.add(pkgname)
-
 # OSTree support is mandatory
 ws_ostree_name = 'workstation-ostree-support'
 ws_ostree_pkgs = set()
@@ -118,10 +112,6 @@ for pkg in manifest_packages:
         pkg not in ws_pkgs and
         pkg not in ws_ostree_pkgs):
         comps_unknown.add(pkg)
-
-for pkg in ws_additional_pkgs:
-    if pkg in comps_unknown:
-        comps_unknown.remove(pkg)
 
 # Look for packages in the manifest but not in comps at all
 n_manifest_new = len(comps_unknown)
@@ -141,13 +131,6 @@ for (pkg, data) in ws_pkgs.items():
             ws_added[pkg] = data
             manifest_packages.add(pkgname)
 
-# Look for packages not in manifest
-for pkgname in ws_additional_pkgs:
-    if pkgname not in manifest_packages:
-        if is_blacklisted(pkgname) is False:
-            #ws_added[pkgname] = (libcomps.PACKAGE_TYPE_DEFAULT, set())
-            manifest_packages.add(pkgname)
-
 def format_pkgtype(n):
     if n == libcomps.PACKAGE_TYPE_DEFAULT:
         return 'default'
@@ -164,12 +147,6 @@ else:
     for pkg in sorted(ws_added):
         (req, groups) = ws_added[pkg]
         print('  {} ({}, groups: {})'.format(pkg, format_pkgtype(req), ', '.join(groups)))
-
-n_additional_pkgs = len(ws_additional_pkgs)
-if n_additional_pkgs > 0:
-    print("{} additional packages not in manifest:".format(n_additional_pkgs))
-    for pkgname in sorted(ws_additional_pkgs):
-        print("  {}".format(pkgname))
 
 if (n_manifest_new > 0 or n_comps_new > 0) and args.save:
     write_manifest(base_pkgs_path, manifest_packages)
