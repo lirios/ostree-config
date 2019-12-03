@@ -13,7 +13,7 @@ mutate-os-release: "0.10.0"
 
 selinux: true
 documentation: true
-boot_location: new
+boot_location: modules
 etc-group-members:
   - wheel
 tmp-is-dir: true
