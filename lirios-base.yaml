@@ -42,6 +42,11 @@ packages:
   - flatpak
   - flatpak-builder
   - xdg-desktop-portal
+  # Scanner
+  - libsane-hpaio
+  - sane-backends-drivers-scanners
+  # Polkit
+  - polkit
   # HFS filesystem tools for Apple hardware
   # See https://github.com/projectatomic/rpm-ostree/issues/1380
   - hfsplus-tools
