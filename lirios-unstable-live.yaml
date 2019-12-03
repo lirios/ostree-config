@@ -17,6 +17,7 @@ packages:
   - dracut-live
   - memtest86+
   - syslinux
+  - isomd5sum
 
 initramfs-args:
   - --no-hostonly
