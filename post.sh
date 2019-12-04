@@ -26,3 +26,10 @@ for x in /usr/sbin/glibc_post_upgrade.*; do
         ln -srf /usr/bin/true ${x}
     fi
 done
+
+# Undo RPM scripts enabling units; we want the presets to be canonical
+# https://github.com/projectatomic/rpm-ostree/issues/1803
+rm -rf /etc/systemd/system/*
+systemctl preset-all
+rm -rf /etc/systemd/user/*
+systemctl --user --global preset-all
