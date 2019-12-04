@@ -58,7 +58,6 @@ packages:
   - kernel-devel
   - elfutils-libelf-devel
   # Liri OS
-  - lirios-customization
   - lirios-repos-ostree
 
 packages-aarch64:
