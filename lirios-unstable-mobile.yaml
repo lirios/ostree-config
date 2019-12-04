@@ -6,5 +6,5 @@ include: lirios-mobile-pkgs.yaml
 
 packages:
   - lirios-release-mobile
-  - liri-nightly-repos
+  - lirios-repos-nightly
   - plymouth-theme-lirios
