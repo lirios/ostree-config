@@ -5,6 +5,7 @@ repos:
 include: lirios-desktop-pkgs.yaml
 
 packages:
+  - lirios-release-desktop
   - liri-nightly-repos
   - plymouth-theme-lirios
   - sddm

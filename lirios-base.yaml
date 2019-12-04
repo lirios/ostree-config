@@ -59,7 +59,6 @@ packages:
   - elfutils-libelf-devel
   # Liri OS
   - lirios-customization
-  - lirios-release
 
 packages-aarch64:
   - grub2-efi
