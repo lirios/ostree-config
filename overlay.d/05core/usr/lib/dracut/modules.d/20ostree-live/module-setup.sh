@@ -1,6 +1,7 @@
+#!/bin/bash
+
 depends() {
     echo "bash systemd dmsquash-live"
-    return 0
 }
 
 install() {
