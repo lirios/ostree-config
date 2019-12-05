@@ -1,0 +1,17 @@
+# We don't need firstboot for live images
+disable firstboot-text.service
+disable firstboot-graphical.service
+
+# Turn off mdmonitor
+disable mdmonitor.service
+disable mdmonitor-takeover.service
+
+# Don't start cron/at as they tend to spawn disk intensive jobs
+disable crond.service
+disable atd.service
+
+# Turn off abrtd on a live image
+disable abrtd.service
+
+# Turn off firewalld on a live image
+disable firewalld.service

@@ -1,0 +1,13 @@
+[Unit]
+Description=Prepares the live environment
+DefaultDependencies=false
+ConditionKernelCommandLine=rd.live.image
+Before=display-manager.service
+After=systemd-user-sessions.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/live-system-setup
+
+[Install]
+WantedBy=multi-user.target
