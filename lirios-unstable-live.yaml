@@ -18,6 +18,7 @@ packages:
   - memtest86+
   - syslinux
   - isomd5sum
+  - weston
 
 initramfs-args:
   - --no-hostonly
