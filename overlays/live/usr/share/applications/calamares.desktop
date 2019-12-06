@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Install to Hard Drive
+GenericName=Live Installer
+Exec=/usr/bin/calamares.sh
+Icon=system-software-install
+Terminal=false
+StartupNotify=false
+Categories=Qt;System;
+OnlyShowIn=X-Liri;
