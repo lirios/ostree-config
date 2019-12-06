@@ -6,8 +6,6 @@ d=`realpath "$(dirname "${0}")"`
 tmprepo="${d}/repo"
 tmpdir="${d}/tmp"
 cachedir="${tmpdir}/cache"
-overridesdir="${tmpdir}/overrides"
-override_manifest="${overridesdir}/lirios-override-manifest.yaml"
 
 rpmostree() {
     local manifest=$1
@@ -29,14 +27,7 @@ commit_overlay() {
 }
 
 prepare_compose_overlay() {
-    local base_manifest=$1
-
-    cat > "${override_manifest}" <<EOF
-include: ${base_manifest}
-EOF
-
     local ovld="$d/overlay.d"
-    local layers=""
     if [ -d $ovld ]; then
          for n in "${ovld}"/*; do
              if ! [ -d "${n}" ]; then
@@ -50,26 +41,19 @@ EOF
          done
     fi
 
-    if [ -n "${layers}" ]; then
-        echo "ostree-layers:" >> "${override_manifest}"
-        for layer in ${layers}; do
-            echo "  - ${layer}" >> "${override_manifest}"
+    local overlays="$d/overlays"
+    if [ -d $overlays ]; then
+        for n in "${overlays}"/*; do
+             if ! [ -d "${n}" ]; then
+                 continue
+             fi
+
+             local bn=$(basename "${n}")
+             local ovlname="lirios-bin-overlay-${bn}"
+             commit_overlay "${ovlname}" "${n}"
         done
     fi
-
-    local rootfs_overlay="$d/overlays/rootfs"
-    if [[ -d "${rootfs_overlay}" && -n $(ls -A "${rootfs_overlay}") ]]; then
-        commit_overlay "lirios-bin-overlay" "${rootfs_overlay}"
-        cat >> "${override_manifest}" <<EOF
-ostree-override-layers:
-  - lirios-bin-overlay
-EOF
-    fi
 }
-
-rm -rf "${overridesdir}"
-mkdir -p "${overridesdir}"
-cp *.{repo,yaml} group passwd *.sh "${overridesdir}"
 
 if ! [ -d "${cachedir}" ]; then
     mkdir -p "${cachedir}"
@@ -80,5 +64,5 @@ if ! [ -d "${tmprepo}" ]; then
     ostree init --repo="${tmprepo}" --mode=archive
 fi
 
-prepare_compose_overlay "lirios-unstable-live.yaml"
-(cd "${overridesdir}"; rpmostree "${override_manifest}")
+prepare_compose_overlay
+(cd "${overridesdir}"; rpmostree lirios-unstable-live.yaml)

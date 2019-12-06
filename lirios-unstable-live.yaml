@@ -25,3 +25,9 @@ initramfs-args:
   - --add=dmsquash-live
   - --add=pollcdrom
   - --add=ostree-live
+
+ostree-layers:
+  - lirios-config-overlay-05live
+
+ostree-override-layers:
+  - lirios-bin-overlay-live
