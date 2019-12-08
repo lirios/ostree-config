@@ -34,6 +34,8 @@ packages:
   - git-core
   - lvm2
   - rpm-ostree
+  # Language support
+  - glibc-minimal-langpack
   # Container management
   - buildah
   - podman
@@ -88,6 +90,9 @@ packages-x86_64:
   - xorg-x11-drv-openchrome
   - xorg-x11-drv-vesa
   - xorg-x11-drv-vmware
+
+install-langs:
+  - en_US
 
 ostree-layers:
   - lirios-config-overlay-05core
