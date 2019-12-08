@@ -12,7 +12,7 @@ automatic_version_prefix: "0.10.0"
 mutate-os-release: "0.10.0"
 
 selinux: true
-documentation: true
+documentation: false
 recommends: false
 boot_location: modules
 etc-group-members:
