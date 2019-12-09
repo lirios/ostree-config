@@ -20,6 +20,12 @@ packages:
   - isomd5sum
   - weston
 
+packages-x86_64:
+  - shim-ia32
+  - grub2-efi-ia32
+  - grub2-efi-ia32-cdboot
+  - grub2-efi-x64-cdboot
+
 initramfs-args:
   - --no-hostonly
   - --add=dmsquash-live
