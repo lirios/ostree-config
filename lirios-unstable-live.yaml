@@ -15,8 +15,6 @@ packages:
   - calamares
   - liri-calamares-branding
   - dracut-live
-  - memtest86+
-  - syslinux
   - isomd5sum
   - weston
 
@@ -25,6 +23,8 @@ packages-x86_64:
   - grub2-efi-ia32
   - grub2-efi-ia32-cdboot
   - grub2-efi-x64-cdboot
+  - syslinux
+  - memtest86+
 
 initramfs-args:
   - --no-hostonly
