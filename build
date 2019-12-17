@@ -109,7 +109,9 @@ fi
 
 if ! [ -z "${remote_url}" -a -z "${mirror_ref}" ]; then
     ostree --repo="${repodir}" remote add --if-not-exists --no-gpg-verify upstream ${remote_url}
-    ostree --repo="${repodir}" pull --mirror --depth=1 upstream:${mirror_ref}
+    if ostree --repo="${repodir}" remote refs upstream | grep -q ${mirror_ref}; then
+        ostree --repo="${repodir}" pull --mirror --depth=1 upstream:${mirror_ref}
+    fi
 fi
 
 prepare_compose_overlay
