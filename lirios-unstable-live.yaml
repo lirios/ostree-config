@@ -2,8 +2,6 @@ include: lirios-unstable-desktop.yaml
 
 ref: lirios/unstable/${basearch}/live
 
-documentation: false
-
 remove-files:
   # We don't ship man(1) or info(1)
   - usr/share/info
