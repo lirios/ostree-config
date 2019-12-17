@@ -3,7 +3,7 @@ pipeline {
     string(name:'releasever', defaultValue:'31', description:'Fedora version')
     choice(name:'basearch', choices:['x86_64', 'aarch64'], description:'Architecture')
     choice(name:'channel', choices:['unstable', 'stable'], description:'Channel')
-    choice(name:'variant', choices:['desktop', 'mobile', 'embedded'], description:'Variant')
+    choice(name:'variant', choices:['desktop', 'live', 'mobile', 'embedded'], description:'Variant')
   }
   agent {
     docker {
@@ -18,16 +18,15 @@ pipeline {
         script {
           repoPath = "${JENKINS_HOME}/workspace/ostree-artifacts/repo-dev"
           repoProdPath = "${JENKINS_HOME}/workspace/ostree-artifacts/repo-prod"
+          cacheDir = "${JENKINS_HOME}/workspace/ostree-artifacts/cache"
         }
         withCredentials([sshUserPrivateKey(credentialsId: 'ostree-repo-ssh', keyFileVariable: 'KEY_FILE')]) {
           sh label: 'Build', script: """
-            export RSYNC_SSH_COMMAND='ssh -i ${KEY_FILE} -o StrictHostKeyChecking=no'
-            ./make-tree --channel=${params.channel} \
-                        --basearch=${params.basearch} \
-                        --variant=${params.variant} \
-                        --prod-url=${env.OSTREE_REPO_URL} \
-                        --dev-repo=${repoPath} \
-                        --prod-repo=${repoProdPath}
+            ./build \
+                --remote-url https://repo.liri.io/ostree/repo \
+                --mirror-ref lirios/${params.channel}/${params.basearch}/${params.variant} \
+                --treefile lirios-${params.channel}-${params.variant}.yaml \
+                --repodir ${repoPath} --cachedir ${cacheDir}
 """
         }
       }

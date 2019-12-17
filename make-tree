@@ -15,6 +15,7 @@ parser.add_argument('--variant', required=True, help='variant')
 parser.add_argument('--prod-url', required=True, help='production repository URL')
 parser.add_argument('--dev-repo', required=True, help='development repository path')
 parser.add_argument('--prod-repo', required=True, help='production repository path')
+parser.add_argument('--cachedir', required=True, help='cache directory')
 
 args = parser.parse_args()
 
@@ -36,7 +37,7 @@ subprocess.run(['rsync', '-az', '--delete', rsync_args, args.prod_url, args.prod
 subprocess.run(['rsync', '-az', '--delete', args.prod_repo, args.dev_repo], check=True)
 
 # Build a new tree
-subprocess.run(['rpm-ostree', 'compose', 'tree', '--force-nocache', '--repo=' + args.dev_repo, 'lirios-%s-%s.yaml' % (args.channel, args.variant)], check=True)
+subprocess.run(['./build', '--repodir', args.dev_repo, '--cachedir', args.cachedir, '--treefile', 'lirios-%s-%s.yaml' % (args.channel, args.variant)], check=True)
 
 # Publish
 subprocess.run(['ostree', '--repo=' + args.prod_repo, 'pull-local', args.dev_repo, branch_name], check=True)

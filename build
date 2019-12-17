@@ -1,0 +1,116 @@
+#!/bin/bash
+
+set -euo pipefail
+
+usage() {
+    cat <<EOC
+${0} builds a Liri OS tree with rpm-ostree.
+
+Options:
+    --remote-url: Production URL
+    --mirror-ref: Remote ref to mirror from the production URL
+    --treefile: rpm-ostree tree file
+    --repodir: OSTree repository path
+    --cachedir: Where to store the rpm-ostree cache
+EOC
+}
+
+d=`realpath "$(dirname "${0}")"`
+remote_url=""
+mirror_ref=""
+treefile=""
+repodir="${d}/repo"
+tmpdir="${d}/tmp"
+cachedir="${tmpdir}/cache"
+
+while [ $# -gt 0 ]; do
+    flag="${1}"; shift;
+    case "${flag}" in
+        --remote-url) remote_url="${1}"; shift ;;
+        --mirror-ref) mirror_ref="${1}"; shift ;;
+        --treefile) treefile="${1}"; shift ;;
+        --repodir) repodir="${1}"; shift ;;
+        --cachedir) cachedir="${1}"; shift ;;
+        *) echo "Unrecognized ${flag} flag."; usage; exit 1 ;;
+        --) break;
+    esac;
+done
+
+if [ -z "${treefile}" ]; then
+    usage
+    exit 1
+fi
+
+if [ -z "${remote_url}" -a -n "${mirror_ref}" ]; then
+    usage
+    exit 1
+fi
+
+if [ -n "${remote_url}" -a -z "${mirror_ref}" ]; then
+    usage
+    exit 1
+fi
+
+rpmostree() {
+    local manifest=$1
+
+    echo "Building ${manifest}"
+    rpm-ostree compose tree --repo="${repodir}" --cachedir="${cachedir}" --unified-core "${manifest}"
+}
+
+commit_overlay() {
+    local name=$1
+    local path=$2
+    local respath=$(realpath "${path}")
+    local git_timestamp="January 1 1970"
+
+    echo -n "Committing ${name}: ${path} ... "
+    ostree commit --repo="${repodir}" --tree=dir="${respath}" -b "${name}" \
+        --owner-uid 0 --owner-gid 0 --no-xattrs --no-bindings --parent=none \
+        --timestamp "${git_timestamp}"
+}
+
+prepare_compose_overlay() {
+    local ovld="$d/overlay.d"
+    if [ -d $ovld ]; then
+         for n in "${ovld}"/*; do
+             if ! [ -d "${n}" ]; then
+                 continue
+             fi
+
+             local bn=$(basename "${n}")
+             local ovlname="lirios-config-overlay-${bn}"
+             commit_overlay "${ovlname}" "${n}"
+         done
+    fi
+
+    local overlays="$d/overlays"
+    if [ -d $overlays ]; then
+        for n in "${overlays}"/*; do
+             if ! [ -d "${n}" ]; then
+                 continue
+             fi
+
+             local bn=$(basename "${n}")
+             local ovlname="lirios-bin-overlay-${bn}"
+             commit_overlay "${ovlname}" "${n}"
+        done
+    fi
+}
+
+if ! [ -d "${cachedir}" ]; then
+    mkdir -p "${cachedir}"
+fi
+
+if ! [ -d "${repodir}" ]; then
+    mkdir -p "${repodir}"
+    ostree init --repo="${repodir}" --mode=archive
+fi
+
+if ! [ -z "${remote_url}" -a -z "${mirror_ref}" ]; then
+    ostree --repo="${repodir}" remote add --if-not-exists --no-gpg-verify upstream ${remote_url}
+    ostree --repo="${repodir}" pull --mirror --depth=1 upstream:${mirror_ref}
+fi
+
+prepare_compose_overlay
+rpmostree ${treefile}
