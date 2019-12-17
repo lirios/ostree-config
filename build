@@ -20,8 +20,7 @@ remote_url=""
 mirror_ref=""
 treefile=""
 repodir="${d}/repo"
-tmpdir="${d}/tmp"
-cachedir="${tmpdir}/cache"
+cachedir=""
 
 while [ $# -gt 0 ]; do
     flag="${1}"; shift;
@@ -54,8 +53,15 @@ fi
 rpmostree() {
     local manifest=$1
 
+    local cachearg=""
+    [ -n "${cachedir}" ] && cachearg="--cachedir=${cachedir}"
+
+    if [ -n "${cachedir}" -a ! -d "${cachedir}" ]; then
+        mkdir -p "${cachedir}"
+    fi
+
     echo "Building ${manifest}"
-    rpm-ostree compose tree --repo="${repodir}" --cachedir="${cachedir}" --unified-core "${manifest}"
+    rpm-ostree compose tree --repo="${repodir}" $cachearg --unified-core "${manifest}"
 }
 
 commit_overlay() {
@@ -97,10 +103,6 @@ prepare_compose_overlay() {
         done
     fi
 }
-
-if ! [ -d "${cachedir}" ]; then
-    mkdir -p "${cachedir}"
-fi
 
 if ! [ -d "${repodir}" ]; then
     mkdir -p "${repodir}"
