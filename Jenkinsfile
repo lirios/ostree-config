@@ -7,14 +7,14 @@ pipeline {
   }
   agent {
     docker {
-      image "fedora:${params.releasever}"
-      args "--privileged --user root -v ${JENKINS_HOME}:${JENKINS_HOME} --tmpfs /tmp -v /var/tmp:/var/tmp --device /dev/fuse --security-opt label:disable"
+      image "liridev/ci-fedora-jenkins:${params.releasever}"
+      args "--privileged -v ${JENKINS_HOME}:${JENKINS_HOME} --tmpfs /tmp -v /var/tmp:/var/tmp --device /dev/fuse --security-opt label:disable"
     }
   }
   stages {
     stage('Build') {
       steps {
-        sh label: 'Installation', script: 'dnf install -y rpm-ostree rsync openssh-clients selinux-policy selinux-policy-targeted policycoreutils'
+        sh label: 'Installation', script: 'sudo dnf install -y rpm-ostree rsync openssh-clients selinux-policy selinux-policy-targeted policycoreutils'
         script {
           repoPath = "${JENKINS_HOME}/workspace/ostree-artifacts/repo-dev"
           repoProdPath = "${JENKINS_HOME}/workspace/ostree-artifacts/repo-prod"
@@ -22,7 +22,7 @@ pipeline {
         }
         withCredentials([sshUserPrivateKey(credentialsId: 'ostree-repo-ssh', keyFileVariable: 'KEY_FILE')]) {
           sh label: 'Build', script: """
-            ./build \
+            sudo ./build \
                 --remote-url https://repo.liri.io/ostree/repo \
                 --mirror-ref lirios/${params.channel}/${params.basearch}/${params.variant} \
                 --treefile lirios-${params.channel}-${params.variant}.yaml \
@@ -34,7 +34,7 @@ pipeline {
   }
   post {
     always {
-      sh label: 'Remove local repositories', script: "rm -rf ${repoProdPath}"
+      sh label: 'Remove local repositories', script: "sudo rm -rf ${repoProdPath}"
     }
   }
 }
