@@ -8,13 +8,13 @@ pipeline {
   agent {
     docker {
       image "fedora:${params.releasever}"
-      args "--privileged --user root -v ${JENKINS_HOME}:${JENKINS_HOME}"
+      args "--privileged --user root -v ${JENKINS_HOME}:${JENKINS_HOME} --tmpfs /tmp -v /var/tmp:/var/tmp --device /dev/fuse --security-opt label:disable"
     }
   }
   stages {
     stage('Build') {
       steps {
-        sh label: 'Installation', script: 'dnf install -y rpm-ostree rsync openssh-clients'
+        sh label: 'Installation', script: 'dnf install -y rpm-ostree rsync openssh-clients selinux-policy selinux-policy-targeted policycoreutils'
         script {
           repoPath = "${JENKINS_HOME}/workspace/ostree-artifacts/repo-dev"
           repoProdPath = "${JENKINS_HOME}/workspace/ostree-artifacts/repo-prod"
