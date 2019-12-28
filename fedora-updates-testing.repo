@@ -1,0 +1,6 @@
+[fedora-updates-testing]
+name=Fedora $releasever $basearch Updates Testing
+mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-f$releasever&arch=$basearch
+enabled=0
+gpgcheck=0
+metadata_expire=1d

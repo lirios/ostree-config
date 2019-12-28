@@ -3,6 +3,7 @@ ref: lirios/unstable/${basearch}/base
 repos:
   - fedora
   - fedora-updates
+  - fedora-updates-testing
   - plfiorini-lirios
 releasever: 31
 
