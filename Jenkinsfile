@@ -26,7 +26,7 @@ pipeline {
                 --remote-url https://repo.liri.io/ostree/repo \
                 --mirror-ref lirios/${params.channel}/${params.basearch}/${params.variant} \
                 --treefile lirios-${params.channel}-${params.variant}.yaml \
-                --repodir ${repoPath} --cachedir ${cacheDir}
+                --repodir ${repoPath}
 """
         }
       }
