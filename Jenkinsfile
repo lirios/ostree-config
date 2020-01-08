@@ -32,9 +32,4 @@ pipeline {
       }
     }
   }
-  post {
-    always {
-      sh label: 'Remove local repositories', script: "sudo rm -rf ${repoProdPath}"
-    }
-  }
 }
