@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -e
-
-ostree --repo=build-repo prune --refs-only --keep-younger-than="6 months ago"
