@@ -12,7 +12,6 @@ remove-files:
 packages:
   - calamares
   - liri-calamares-branding
-  - dracut-live
   - isomd5sum
   - weston
 
@@ -26,8 +25,6 @@ packages-x86_64:
 
 initramfs-args:
   - --no-hostonly
-  - --add=dmsquash-live
-  - --add=pollcdrom
   - --add=ostree-live
 
 ostree-layers:
