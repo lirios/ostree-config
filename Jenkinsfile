@@ -17,7 +17,6 @@ pipeline {
         sh label: 'Installation', script: 'sudo dnf install -y rpm-ostree rsync openssh-clients selinux-policy selinux-policy-targeted policycoreutils'
         script {
           repoPath = "${JENKINS_HOME}/workspace/ostree-artifacts/repo-dev"
-          repoProdPath = "${JENKINS_HOME}/workspace/ostree-artifacts/repo-prod"
           cacheDir = "${JENKINS_HOME}/workspace/ostree-artifacts/cache"
         }
         withCredentials([sshUserPrivateKey(credentialsId: 'ostree-repo-ssh', keyFileVariable: 'KEY_FILE')]) {
@@ -27,6 +26,7 @@ pipeline {
                 --mirror-ref lirios/${params.channel}/${params.basearch}/${params.variant} \
                 --treefile lirios-${params.channel}-${params.variant}.yaml \
                 --repodir ${repoPath}
+            sudo ostree --repo=${repoPath} prune --keep-younger-than=1s
 """
         }
       }
