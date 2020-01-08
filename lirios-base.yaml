@@ -29,6 +29,13 @@ ignore-removed-groups:
 check-passwd: { type: file, filename: passwd }
 check-groups: { type: file, filename: group }
 
+remove-files:
+  # We don't ship man(1) or info(1)
+  - usr/share/info
+  - usr/share/man
+  # Drop text docs too
+  - usr/share/doc
+
 default_target: graphical.target
 
 packages:
