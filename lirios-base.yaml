@@ -1,7 +1,5 @@
 ref: lirios/unstable/${basearch}/base
 
-gpg-key: "BA01FF4E"
-
 repos:
   - fedora
   - fedora-updates
