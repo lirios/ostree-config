@@ -8,6 +8,7 @@ pipeline {
     docker {
       image "liridev/ci-fedora-jenkins:31"
       args "--privileged -v ${JENKINS_HOME}:${JENKINS_HOME} --tmpfs /tmp -v /var/tmp:/var/tmp --device /dev/fuse --security-opt label:disable"
+      alwaysPull true
     }
   }
   environment {
