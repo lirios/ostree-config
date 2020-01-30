@@ -2,6 +2,9 @@ include: lirios-unstable-desktop.yaml
 
 ref: lirios/unstable/${basearch}/live
 
+repos:
+  - plfiorini-liri-tools
+
 packages:
   - calamares
   - liri-calamares-branding
