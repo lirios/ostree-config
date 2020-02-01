@@ -2,7 +2,7 @@
 Description=Initialize tmpfs for user data
 DefaultDependencies=false
 RequiresMountsFor=/writable
-Before=sysroot-etc.mount sysroot-var.mount
+Before=mount-etc.service mount-var.service
 
 [Service]
 Type=oneshot
