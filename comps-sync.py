@@ -116,7 +116,8 @@ for pkg in comps.groups_match(id=ws_ostree_name)[0].packages:
 for pkg in manifest_packages:
     if (pkg not in comps_whitelist and
         pkg not in ws_pkgs and
-        pkg not in ws_ostree_pkgs):
+        pkg not in ws_ostree_pkgs and
+        is_blacklisted(pkg) is False):
         comps_unknown.add(pkg)
 
 # Look for packages in the manifest but not in comps at all
@@ -136,6 +137,9 @@ for (pkg, data) in ws_pkgs.items():
         if is_blacklisted(pkgname) is False:
             ws_added[pkg] = data
             manifest_packages.add(pkgname)
+
+# Make sure blacklisted packages are removed from the list
+manifest_packages = set([x for x in manifest_packages if is_blacklisted(x) is False])
 
 def format_pkgtype(n):
     if n == libcomps.PACKAGE_TYPE_DEFAULT:
