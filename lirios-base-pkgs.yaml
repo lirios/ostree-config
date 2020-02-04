@@ -58,7 +58,6 @@ packages:
   - fprintd-pam
   - gamemode
   - glibc
-  - glibc-all-langpacks
   - glx-utils
   - gnu-free-mono-fonts
   - gnu-free-sans-fonts

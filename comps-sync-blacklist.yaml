@@ -54,6 +54,8 @@ blacklist:
   - grubby
   # Colin says we also don't need grubby-deprecated
   - grubby-deprecated
+  # We already install glibc-minimal-langpack
+  - glibc-all-langpacks
   # Why?
   - ncurses
   #  Architecture specific packages
