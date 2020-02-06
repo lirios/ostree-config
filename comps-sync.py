@@ -49,9 +49,7 @@ def is_blacklisted(pkgname):
             return True
     return False
 
-manifest_packages = set(manifest['packages'])
-
-comps_unknown = set()
+manifest_packages = set(comps_whitelist)
 
 workstation_product_packages = set()
 # Parse comps, and build up a set of all packages so we
@@ -77,8 +75,6 @@ for ws_env_name in comps_environments:
             if pkg.type not in (libcomps.PACKAGE_TYPE_DEFAULT,
                                 libcomps.PACKAGE_TYPE_MANDATORY):
                 continue
-            if is_blacklisted(pkgname) is True:
-                continue
             pkgdata = ws_pkgs.get(pkgname)
             if pkgdata is None:
                 ws_pkgs[pkgname] = pkgdata = (pkg.type, set([gid.name]))
@@ -97,8 +93,6 @@ for group_name in comps_additional_groups:
         if pkg.type not in (libcomps.PACKAGE_TYPE_DEFAULT,
                             libcomps.PACKAGE_TYPE_MANDATORY):
             continue
-        if is_blacklisted(pkgname) is True:
-            continue
         pkgdata = ws_pkgs.get(pkgname)
         if pkgdata is None:
             ws_pkgs[pkgname] = pkgdata = (pkg.type, set([group_name]))
@@ -109,26 +103,10 @@ for group_name in comps_additional_groups:
 
 # OSTree support is mandatory
 ws_ostree_name = 'workstation-ostree-support'
-ws_ostree_pkgs = set()
 for pkg in comps.groups_match(id=ws_ostree_name)[0].packages:
-    ws_ostree_pkgs.add(pkg.name)
-
-for pkg in manifest_packages:
-    if (pkg not in comps_whitelist and
-        pkg not in ws_pkgs and
-        pkg not in ws_ostree_pkgs and
-        is_blacklisted(pkg) is False):
-        comps_unknown.add(pkg)
-
-# Look for packages in the manifest but not in comps at all
-n_manifest_new = len(comps_unknown)
-if n_manifest_new == 0:
-    print("All manifest packages are already listed in comps.")
-else:
-    print("{} packages not in {}:".format(n_manifest_new, ', '.join(comps_environments)))
-    for pkg in sorted(comps_unknown):
-        print('  ' + pkg)
-        manifest_packages.remove(pkg)
+    pkgdata = ws_pkgs.get(pkg.name)
+    if pkgdata is None:
+        ws_pkgs[pkg.name] = pkgdata = (pkg.type, ws_ostree_name)
 
 # Look for packages in workstation but not in the manifest
 ws_added = {}
@@ -137,9 +115,6 @@ for (pkg, data) in ws_pkgs.items():
         if is_blacklisted(pkgname) is False:
             ws_added[pkg] = data
             manifest_packages.add(pkgname)
-
-# Make sure blacklisted packages are removed from the list
-manifest_packages = set([x for x in manifest_packages if is_blacklisted(x) is False])
 
 def format_pkgtype(n):
     if n == libcomps.PACKAGE_TYPE_DEFAULT:
@@ -158,5 +133,5 @@ else:
         (req, groups) = ws_added[pkg]
         print('  {} ({}, groups: {})'.format(pkg, format_pkgtype(req), ', '.join(groups)))
 
-if (n_manifest_new > 0 or n_comps_new > 0) and args.save:
+if n_comps_new > 0 and args.save:
     write_manifest(base_pkgs_path, manifest_packages)
