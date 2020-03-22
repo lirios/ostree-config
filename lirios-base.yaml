@@ -98,6 +98,9 @@ packages-x86_64:
   - xorg-x11-drv-vesa
   - xorg-x11-drv-vmware
 
+exclude-packages:
+  - PackageKit
+
 install-langs:
   - en_US
 
