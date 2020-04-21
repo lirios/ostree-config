@@ -1,0 +1,14 @@
+language: minimal
+
+services:
+  - docker
+
+before_script:
+  - |
+    if [ `grep -E "(vmx|svm)" /proc/cpuinfo | wc -l` -lt 1 ]; then
+      echo "Host doesn't support virtualization"
+      /bin/false
+    fi
+
+script:
+  - docker run --rm -it --privileged --tmpfs /tmp --device /dev/kvm --device /dev/fuse -v $(pwd):/workspace -w /workspace fedora:latest .travis/build.sh x86_64 desktop
