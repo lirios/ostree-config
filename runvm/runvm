@@ -1,0 +1,144 @@
+#!/bin/bash
+
+# Based on coreos-assembler code.
+
+set -euo pipefail
+
+usage() {
+    cat <<EOC
+${0} builds a supermin appliance.
+
+Options:
+    --preparedir: Where do supermin prepare output goes
+    --builddir: Where do supermin build output goes
+EOC
+}
+
+info() {
+    echo "info: $*" 1>&2
+}
+
+fatal() {
+    echo "fatal: $*" 1>&2; exit 1
+}
+
+curdir=`realpath "$(dirname "${0}")"`
+workdir=`realpath "${curdir}/.."`
+tmpdir="${workdir}/tmp"
+vmpreparedir="${tmpdir}/supermin.prepare"
+vmbuilddir="${tmpdir}/supermin.build"
+
+while [ $# -gt 0 ]; do
+    flag="${1}"; shift;
+    case "${flag}" in
+        --tmpdir) tmpdir="${1}"; shift ;;
+        --preparedir) preparedir="${1}"; shift ;;
+        --builddir) builddir="${1}"; shift ;;
+        --) break ;;
+        *) echo "Unrecognized ${flag} flag."; usage; exit 1 ;;
+    esac;
+done
+
+rm -rf "${vmpreparedir}" "${vmbuilddir}"
+mkdir -p "${tmpdir}" "${vmpreparedir}" "${vmbuilddir}"
+
+# Get target architecture
+arch=$(uname -m)
+devtype=pci
+case $arch in
+    "x86_64")  DEFAULT_TERMINAL="ttyS0"    ;;
+    "aarch64") DEFAULT_TERMINAL="ttyAMA0"  ;;
+    *) fatal "Architecture $(arch) not supported"
+esac
+export DEFAULT_TERMINAL
+
+if [ -x /usr/libexec/qemu-kvm ]; then
+    QEMU_KVM="/usr/libexec/qemu-kvm"
+else
+    # Enable arch-specific options for qemu
+    case "$(arch)" in
+        "x86_64")  QEMU_KVM="qemu-system-$(arch) -accel kvm"                          ;;
+        "aarch64") QEMU_KVM="qemu-system-$(arch) -accel kvm -M virt,gic-version=host" ;;
+        *) fatal "Architecture $(arch) not supported"
+    esac
+fi
+
+if grep -q 'kubepods' /proc/1/cgroup; then
+    # Only use 1 core on kubernetes since we can't determine how much we can actually use
+    QEMU_PROCS=1
+elif [ "$(nproc)" -gt 16 ]; then
+    # Cap qemu SMP at some reasonable level to not exceed limitation of some platforms
+    QEMU_PROCS=16
+else
+    QEMU_PROCS="$(nproc)"
+fi
+# Cap SMP and disable VGA as it "eats" output from console on some platforms
+QEMU_KVM+=" -smp ${QEMU_PROCS} -vga none"
+export QEMU_KVM
+export QEMU_PROCS
+
+# Prepare
+rpms=$(cat "${curdir}/vmdeps.txt" | egrep -v '^#')
+supermin --prepare --use-installed -o "${vmpreparedir}" $rpms
+
+# Set up init script
+cat > "${vmpreparedir}/init" <<EOF
+#!/bin/bash
+
+set -euo pipefail
+
+export PATH=/usr/sbin:$PATH
+workdir=${workdir}
+
+# Use the builder user's id, otherwise some operations like
+# chmod will set ownership to root, not builder
+export USER=$(id -u)
+
+$(cat "${curdir}"/supermin-init-prelude.sh)
+rc=0
+sh ${tmpdir}/cmd.sh || rc=\$?
+echo \$rc > ${tmpdir}/rc
+if [ -b /dev/sdb1 ]; then
+    /sbin/fstrim -v ${workdir}/cache
+fi
+/sbin/reboot -f
+EOF
+chmod a+x "${vmpreparedir}"/init
+(cd "${vmpreparedir}" && tar -czf init.tar.gz --remove-files init)
+echo "$@" > "${tmpdir}"/cmd.sh
+rm -f "${tmpdir}/rc"
+
+# Build
+supermin --build "${vmpreparedir}" --size 5G -f ext2 -o "${vmbuilddir}"
+
+# Arguments
+scsibus="bus=pci.0,addr=0x3"
+arch_args=
+case $arch in
+    "aarch64")
+        # 'pci' bus doesn't work on aarch64
+        scsibus="bus=pcie.0,addr=0x3"
+        arch_args="-bios /usr/share/AAVMF/AAVMF_CODE.fd"
+    ;;
+esac
+
+# Run
+${QEMU_KVM} ${arch_args:-} \
+    -nodefaults -nographic -m 2048 -no-reboot -cpu host \
+    -kernel "${vmbuilddir}/kernel" \
+    -initrd "${vmbuilddir}/initrd" \
+    -netdev user,id=eth0,hostname=supermin \
+    -device virtio-net-"${devtype}",netdev=eth0 \
+    -device virtio-scsi-"${devtype}",id=scsi0,"${scsibus}" \
+    -object rng-random,filename=/dev/urandom,id=rng0 -device virtio-rng-"${devtype}",rng=rng0 \
+    -drive if=none,id=drive-scsi0-0-0-0,snapshot=on,file="${vmbuilddir}/root" \
+    -device scsi-hd,bus=scsi0.0,channel=0,scsi-id=0,lun=0,drive=drive-scsi0-0-0-0,id=scsi0-0-0-0,bootindex=1 \
+    "${cachedisk[@]}" \
+    -virtfs local,id=workdir,path="${workdir}",security_model=none,mount_tag=workdir \
+    "${srcvirtfs[@]}" -serial stdio -append "root=/dev/sda console=${DEFAULT_TERMINAL} selinux=1 enforcing=0 autorelabel=1"
+
+if [ ! -f "${tmpdir}/rc" ]; then
+    fatal "Couldn't find rc file, something went terribly wrong!"
+fi
+rc="$(cat "${tmpdir}/rc")"
+rm -f "${tmpdir}/rc"

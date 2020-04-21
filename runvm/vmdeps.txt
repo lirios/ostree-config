@@ -1,0 +1,18 @@
+# These packages will be included in the VM image created by
+# supermin that we use via `runvm`
+
+# Bare essentials
+bash vim-minimal coreutils util-linux procps-ng kmod kernel-modules
+
+# For composes
+rpm-ostree distribution-gpg-keys jq dnf-data
+gnupg2 pinentry
+
+# For clean reboot
+systemd
+
+# Networking
+dhcp-client iproute
+
+# SELinux
+selinux-policy selinux-policy-targeted policycoreutils
