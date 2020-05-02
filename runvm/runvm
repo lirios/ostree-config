@@ -148,3 +148,5 @@ if [ ! -f "${tmpdir}/rc" ]; then
 fi
 rc="$(cat "${tmpdir}/rc")"
 rm -f "${tmpdir}/rc"
+
+exit $rc
