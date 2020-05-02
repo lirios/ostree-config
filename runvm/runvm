@@ -86,7 +86,7 @@ supermin --prepare --use-installed -o "${vmpreparedir}" $rpms
 cat > "${vmpreparedir}/init" <<EOF
 #!/bin/bash
 
-set -euo pipefail
+set -xeuo pipefail
 
 export PATH=/usr/sbin:$PATH
 workdir=${workdir}
