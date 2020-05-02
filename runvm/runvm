@@ -78,7 +78,7 @@ export QEMU_KVM
 export QEMU_PROCS
 
 # Prepare
-rpms=$(cat "${curdir}/vmdeps.txt" | egrep -v '^#')
+rpms=$(cat "${curdir}/vmdeps.txt" | egrep -v '^#' | xargs)
 echo "Installing the following packages: $rpms"
 supermin --prepare --use-installed -o "${vmpreparedir}" $rpms
 
