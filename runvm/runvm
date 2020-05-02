@@ -135,7 +135,7 @@ ${QEMU_KVM} ${arch_args:-} \
     -drive if=none,id=drive-scsi0-0-0-0,snapshot=on,file="${vmbuilddir}/root" \
     -device scsi-hd,bus=scsi0.0,channel=0,scsi-id=0,lun=0,drive=drive-scsi0-0-0-0,id=scsi0-0-0-0,bootindex=1 \
     -virtfs local,id=workdir,path="${workdir}",security_model=none,mount_tag=workdir \
-    -serial stdio -append "root=/dev/sda console=${DEFAULT_TERMINAL} selinux=1 enforcing=0 autorelabel=1" \
+    -serial stdio -append "root=/dev/sda console=${DEFAULT_TERMINAL} selinux=1 enforcing=0 autorelabel=1 kernel.panic=1" \
     <&- # the <&- here closes stdin otherwise qemu waits forever
 
 if [ ! -f "${tmpdir}/rc" ]; then
