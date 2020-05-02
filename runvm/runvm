@@ -88,6 +88,12 @@ cat > "${vmpreparedir}/init" <<EOF
 
 set -xeuo pipefail
 
+trap 'catch' EXIT
+
+catch() {
+    /sbin/reboot -f
+}
+
 export PATH=/usr/sbin:$PATH
 workdir=${workdir}
 
@@ -102,7 +108,6 @@ echo \$rc > ${tmpdir}/rc
 if [ -b /dev/sdb1 ]; then
     /sbin/fstrim -v ${workdir}/cache
 fi
-/sbin/reboot -f
 EOF
 chmod a+x "${vmpreparedir}"/init
 (cd "${vmpreparedir}" && tar -czf init.tar.gz --remove-files init)
