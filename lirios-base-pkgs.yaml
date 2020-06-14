@@ -17,6 +17,7 @@ packages:
   - abattis-cantarell-fonts
   - acl
   - alsa-plugins-pulseaudio
+  - alsa-sof-firmware
   - alsa-ucm
   - alsa-utils
   - atmel-firmware
@@ -48,7 +49,9 @@ packages:
   - dejavu-sans-mono-fonts
   - dejavu-serif-fonts
   - dnsmasq
+  - docker
   - e2fsprogs
+  - earlyoom
   - ethtool
   - file
   - firewalld
@@ -59,14 +62,11 @@ packages:
   - gamemode
   - glibc
   - glx-utils
-  - gnu-free-mono-fonts
-  - gnu-free-sans-fonts
-  - gnu-free-serif-fonts
   - gnupg2
   - google-noto-emoji-color-fonts
   - google-noto-sans-cjk-ttc-fonts
-  - google-noto-sans-sinhala-fonts
-  - google-noto-serif-cjk-ttc-fonts
+  - google-noto-sans-gurmukhi-fonts
+  - google-noto-sans-sinhala-vf-fonts
   - gstreamer1-plugins-bad-free
   - gstreamer1-plugins-good
   - gutenprint
@@ -108,6 +108,7 @@ packages:
   - julietaula-montserrat-fonts
   - kbd
   - kernel
+  - kernel-modules
   - kernel-modules-extra
   - khmeros-base-fonts
   - less
@@ -123,7 +124,6 @@ packages:
   - lohit-bengali-fonts
   - lohit-devanagari-fonts
   - lohit-gujarati-fonts
-  - lohit-gurmukhi-fonts
   - lohit-kannada-fonts
   - lohit-odia-fonts
   - lohit-tamil-fonts
@@ -152,8 +152,9 @@ packages:
   - openssh-clients
   - openssh-server
   - openvpn
+  - ostree-grub2
   - paktype-naskh-basic-fonts
-  - pam_krb5
+  - pam_afs_session
   - paps
   - paratype-pt-sans-fonts
   - passwd
@@ -180,9 +181,9 @@ packages:
   - rootfiles
   - rp-pppoe
   - rpm
+  - rpm-ostree
   - rsync
   - samba-client
-  - scl-utils
   - selinux-policy-targeted
   - setup
   - shadow-utils
@@ -220,6 +221,7 @@ packages:
   - wireless-tools
   - words
   - wvdial
+  - xorg-x11-drv-armada
   - xorg-x11-drv-ati
   - xorg-x11-drv-evdev
   - xorg-x11-drv-fbdev
