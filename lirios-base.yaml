@@ -8,7 +8,7 @@ releasever: 31
 
 include: lirios-base-pkgs.yaml
 
-automatic_version_prefix: "0.10.0"
+automatic_version_prefix: "0.10.0.<date:%Y%m%d>.dev"
 mutate-os-release: "0.10.0"
 
 selinux: true
