@@ -47,6 +47,9 @@ blacklist:
   - dnf-yum
   - dnf-plugins-core
   - yum
+  - deltarpm
+  # We want moby-engine instead
+  - docker
   # Not sure why this is there at all
   - dracut-config-rescue
   # Eh...you can install this in a priv container
@@ -83,10 +86,6 @@ blacklist:
   - gnome-calendar
   - gnome-documents
   - gnome-photos
-  # We use rpm-ostree for the host
-  - dnf
-  - dnf-plugins-core
-  - deltarpm
   # Really not worth listing explicitly
   - filesystem
   # Why?
@@ -143,6 +142,7 @@ blacklist:
   - pinentry-gnome3
   - qgnomeplatform
   # No Fedora specific stuff
+  - fedora-release-notes
   - fedora-user-agent-chrome
   - fedora-release-workstation
   - fedora-workstation-backgrounds
@@ -160,12 +160,8 @@ blacklist:
   # We removed cronie a while ago, should nuke these too
   - crontabs
   - at
-  # We use rpm-ostree for the host
-  - deltarpm
   # ed is useless for our users
   - ed
-  # Remove Fedora specific stuff
-  - fedora-release-notes
   # We only want systemd journal
   - rsyslog
   # These are optional and can be installed as OS extensions

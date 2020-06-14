@@ -46,6 +46,7 @@ packages:
   # Container management
   - buildah
   - podman
+  - moby-engine
   - skopeo
   - toolbox
   # Flatpak support
