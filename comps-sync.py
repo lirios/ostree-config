@@ -25,8 +25,14 @@ def write_manifest(fpath, pkgs):
 parser = argparse.ArgumentParser()
 parser.add_argument("--save", help="Write changes", action='store_true')
 parser.add_argument("--file", help="Source path")
+parser.add_argument("--releasever", help="Fedora release version")
 
 args = parser.parse_args()
+
+if args.file and args.releasever:
+    fatal('The --file and --releasever are mutually exclusive')
+if not args.file and not args.releasever:
+    fatal('The --releasever argument is mandatory when a comps file is not used')
 
 base_pkgs_path = 'lirios-base-pkgs.yaml'
 with open(base_pkgs_path) as f:
@@ -59,7 +65,7 @@ comps = libcomps.Comps()
 if args.file:
     comps.fromxml_f(args.file)
 else:
-    response = requests.get('https://pagure.io/fedora-comps/raw/master/f/comps-f32.xml.in')
+    response = requests.get('https://pagure.io/fedora-comps/raw/master/f/comps-f{}.xml.in'.format(args.releasever))
     comps.fromxml_str(response.text)
 
 # Parse the environments, gathering default or mandatory packages
