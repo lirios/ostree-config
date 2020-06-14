@@ -59,7 +59,7 @@ comps = libcomps.Comps()
 if args.file:
     comps.fromxml_f(args.file)
 else:
-    response = requests.get('https://pagure.io/fedora-comps/raw/master/f/comps-f30.xml.in')
+    response = requests.get('https://pagure.io/fedora-comps/raw/master/f/comps-f32.xml.in')
     comps.fromxml_str(response.text)
 
 # Parse the environments, gathering default or mandatory packages
