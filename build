@@ -16,6 +16,7 @@ EOC
 }
 
 d=`realpath "$(dirname "${0}")"`
+arch=$(uname -m)
 remote_url=""
 mirror_ref=""
 treefile=""
@@ -25,6 +26,7 @@ cachedir=""
 while [ $# -gt 0 ]; do
     flag="${1}"; shift;
     case "${flag}" in
+        --arch) arch="${1}"; shift ;;
         --remote-url) remote_url="${1}"; shift ;;
         --mirror-ref) mirror_ref="${1}"; shift ;;
         --treefile) treefile="${1}"; shift ;;
@@ -60,8 +62,14 @@ rpmostree() {
         mkdir -p "${cachedir}"
     fi
 
+    local lockfile_arg=""
+    packages_lockfile="packages-lock.${arch}.yaml"
+    if [ -f ${packages_lockfile} ]; then
+        lockfile_arg="--ex-lockfile=${packages_lockfile}"
+    fi
+
     echo "Building ${manifest}"
-    rpm-ostree compose tree --repo="${repodir}" $cachearg --unified-core "${manifest}"
+    rpm-ostree compose tree --repo="${repodir}" $cachearg --unified-core $lockfile_arg "${manifest}"
 }
 
 commit_overlay() {
