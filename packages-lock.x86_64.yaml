@@ -1,0 +1,5 @@
+packages:
+  # Pin crypto-policies to avoid Lua script in newer versions
+  # https://github.com/lirios/ostree-config/issues/4
+  crypto-policies:
+    evra: 20191128-5.gitcd267a5.fc32.noarch
