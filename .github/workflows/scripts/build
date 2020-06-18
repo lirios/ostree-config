@@ -12,6 +12,7 @@ if [ -z "$arch" -o -z "$variant" ]; then
 fi
 
 ./build \
+    --arch=$arch \
     --remote-url https://repo.liri.io/ostree/repo \
     --mirror-ref lirios/unstable/${arch}/${variant} \
     --treefile lirios-unstable-${variant}.yaml \
