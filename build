@@ -7,6 +7,7 @@ usage() {
 ${0} builds a Liri OS tree with rpm-ostree.
 
 Options:
+    --arch: Architecture
     --remote-url: Production URL
     --mirror-ref: Remote ref to mirror from the production URL
     --treefile: rpm-ostree tree file
