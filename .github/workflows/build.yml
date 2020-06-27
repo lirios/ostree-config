@@ -3,6 +3,9 @@ name: Build
 on:
   schedule:
     - cron: '0 0 * * *'
+  repository_dispatch:
+    types:
+      - rebuild
 
 jobs:
   build-x86_64:
