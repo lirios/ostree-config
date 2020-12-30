@@ -31,7 +31,6 @@ packages:
   - bc
   - bind-utils
   - bluez-cups
-  - bridge-utils
   - btrfs-progs
   - bzip2
   - chrony
@@ -49,10 +48,10 @@ packages:
   - dejavu-sans-mono-fonts
   - dejavu-serif-fonts
   - dnsmasq
-  - docker
   - e2fsprogs
   - earlyoom
   - ethtool
+  - fedora-repos-modular
   - file
   - firewalld
   - foomatic
@@ -115,9 +114,10 @@ packages:
   - liberation-mono-fonts
   - liberation-sans-fonts
   - liberation-serif-fonts
+  - libertas-sd8686-firmware
+  - libertas-sd8787-firmware
   - libertas-usb8388-firmware
   - libreswan
-  - linux-atm
   - linux-firmware
   - logrotate
   - lohit-assamese-fonts
@@ -141,6 +141,7 @@ packages:
   - mpage
   - mtr
   - nano
+  - nano-default-editor
   - nfs-utils
   - nmap
   - nss-altfiles
@@ -156,7 +157,6 @@ packages:
   - paktype-naskh-basic-fonts
   - pam_afs_session
   - paps
-  - paratype-pt-sans-fonts
   - passwd
   - passwdqc
   - pciutils
@@ -167,6 +167,7 @@ packages:
   - policycoreutils-python-utils
   - procps-ng
   - psmisc
+  - pt-sans-fonts
   - pulseaudio
   - pulseaudio-module-x11
   - pulseaudio-utils
@@ -179,7 +180,6 @@ packages:
   - realmd
   - rng-tools
   - rootfiles
-  - rp-pppoe
   - rpm
   - rpm-ostree
   - rsync
@@ -206,21 +206,21 @@ packages:
   - systemd-udev
   - tar
   - thai-scalable-waree-fonts
+  - thermald
   - time
   - tree
   - unzip
+  - uresourced
   - usb_modeswitch
   - usbutils
   - util-linux
   - util-linux-user
-  - vconfig
   - vim-minimal
   - vpnc
   - wget
   - which
-  - wireless-tools
   - words
-  - wvdial
+  - xorg-x11-drv-amdgpu
   - xorg-x11-drv-armada
   - xorg-x11-drv-ati
   - xorg-x11-drv-evdev
@@ -235,4 +235,4 @@ packages:
   - xorg-x11-xinit
   - zd1211-firmware
   - zip
-  - zram
+  - zram-generator-defaults
