@@ -1,6 +1,6 @@
 ref: lirios/unstable/${basearch}/base
 
-gpg-key: "4D56A1BCF51AC3D7"
+gpg-key: "123215684B1FD834"
 
 repos:
   - fedora
