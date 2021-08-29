@@ -2,7 +2,7 @@ include: lirios-base.yaml
 packages:
   - google-roboto-fonts
   - google-noto-sans-fonts
-  - liri-platformtheme
+  - liri-qtintegration
   - liri-networkmanager
   - liri-pulseaudio
   - liri-power-manager
