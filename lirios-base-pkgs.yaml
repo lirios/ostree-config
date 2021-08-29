@@ -16,7 +16,6 @@ packages:
   - aajohan-comfortaa-fonts
   - abattis-cantarell-fonts
   - acl
-  - alsa-plugins-pulseaudio
   - alsa-sof-firmware
   - alsa-ucm
   - alsa-utils
@@ -36,6 +35,7 @@ packages:
   - chrony
   - cifs-utils
   - colord
+  - compsize
   - coreutils
   - cpio
   - cryptsetup
@@ -44,13 +44,14 @@ packages:
   - curl
   - cyrus-sasl-plain
   - dbus
+  - default-editor
   - dejavu-sans-fonts
   - dejavu-sans-mono-fonts
   - dejavu-serif-fonts
   - dnsmasq
   - e2fsprogs
-  - earlyoom
   - ethtool
+  - exfatprogs
   - fedora-repos-modular
   - file
   - firewalld
@@ -66,19 +67,20 @@ packages:
   - google-noto-sans-cjk-ttc-fonts
   - google-noto-sans-gurmukhi-fonts
   - google-noto-sans-sinhala-vf-fonts
+  - gstreamer1-plugin-openh264
   - gstreamer1-plugins-bad-free
   - gstreamer1-plugins-good
+  - gstreamer1-plugins-ugly-free
   - gutenprint
   - gutenprint-cups
   - hostname
   - hplip
   - hunspell
+  - ibus-anthy
   - ibus-hangul
-  - ibus-kkc
   - ibus-libpinyin
   - ibus-libzhuyin
   - ibus-m17n
-  - ibus-qt
   - ibus-typing-booster
   - iproute
   - iptables
@@ -109,7 +111,7 @@ packages:
   - kernel
   - kernel-modules
   - kernel-modules-extra
-  - khmeros-base-fonts
+  - khmer-os-system-fonts
   - less
   - liberation-mono-fonts
   - liberation-sans-fonts
@@ -140,8 +142,6 @@ packages:
   - mlocate
   - mpage
   - mtr
-  - nano
-  - nano-default-editor
   - nfs-utils
   - nmap
   - nss-altfiles
@@ -161,6 +161,10 @@ packages:
   - passwdqc
   - pciutils
   - pinfo
+  - pipewire-alsa
+  - pipewire-gstreamer
+  - pipewire-pulseaudio
+  - pipewire-utils
   - plymouth
   - plymouth-system-theme
   - policycoreutils
@@ -168,9 +172,7 @@ packages:
   - procps-ng
   - psmisc
   - pt-sans-fonts
-  - pulseaudio
-  - pulseaudio-module-x11
-  - pulseaudio-utils
+  - python3-dnf-plugin-system-upgrade
   - qemu-guest-agent
   - qt5-qtbase
   - qt5-qtbase-gui
@@ -178,11 +180,11 @@ packages:
   - qt5-qtxmlpatterns
   - quota
   - realmd
-  - rng-tools
   - rootfiles
   - rpm
   - rpm-ostree
   - rsync
+  - s390utils-base
   - samba-client
   - selinux-policy-targeted
   - setup
@@ -203,6 +205,7 @@ packages:
   - symlinks
   - system-config-printer-udev
   - systemd
+  - systemd-oomd-defaults
   - systemd-udev
   - tar
   - thai-scalable-waree-fonts

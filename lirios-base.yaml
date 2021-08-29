@@ -6,7 +6,7 @@ repos:
   - fedora
   - fedora-updates
   - plfiorini-lirios
-releasever: 33
+releasever: 34
 
 include: lirios-base-pkgs.yaml
 
