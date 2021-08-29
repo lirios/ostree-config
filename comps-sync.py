@@ -60,7 +60,7 @@ comps = libcomps.Comps()
 if args.file:
     comps.fromxml_f(args.file)
 else:
-    response = requests.get('https://pagure.io/fedora-comps/raw/master/f/comps-f{}.xml.in'.format(args.releasever))
+    response = requests.get('https://pagure.io/fedora-comps/raw/main/f/comps-f{}.xml.in'.format(args.releasever))
     if response.status_code != 200:
         fatal('Failed to download comps-f{}.xml.in'.format(args.releasever))
     comps.fromxml_str(response.text)
