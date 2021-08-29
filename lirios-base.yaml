@@ -5,6 +5,7 @@ gpg-key: "4D56A1BCF51AC3D7"
 repos:
   - fedora
   - fedora-updates
+  - fedora-cisco-openh264
   - plfiorini-lirios
 releasever: 34
 
