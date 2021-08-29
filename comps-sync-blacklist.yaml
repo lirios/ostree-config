@@ -69,6 +69,7 @@ blacklist:
   - ppc64-utils
   - powerpc-utils
   - lsvpd
+  - s390utils-base
   # x86 specific packages. Added back by lirios-base.yaml
   - xorg-x11-drv-intel
   - xorg-x11-drv-openchrome

@@ -184,7 +184,6 @@ packages:
   - rpm
   - rpm-ostree
   - rsync
-  - s390utils-base
   - samba-client
   - selinux-policy-targeted
   - setup
