@@ -11,7 +11,7 @@ import libcomps
 import requests
 
 def fatal(msg):
-    print >>sys.stderr, msg
+    print(msg, file=sys.stderr)
     sys.exit(1)
 
 def write_manifest(fpath, pkgs):
